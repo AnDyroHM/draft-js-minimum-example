@@ -19,11 +19,7 @@ class App extends Component {
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
   keyBindingFn = (event) => {
-    // we press CTRL + K => return 'bbbold'
-    // we use hasCommandModifier instead of checking for CTRL keyCode because different OSs have different command keys
     if (KeyBindingUtil.hasCommandModifier(event) && event.keyCode === 83) { return 'save'; }
-    // manages usual things, like:
-    // Ctrl+Z => return 'undo'
     return getDefaultKeyBinding(event);
   }
 
@@ -42,9 +38,6 @@ class App extends Component {
     return 'not-handled';
   }
   onChange = (editorState) => {
-    // const contentState = editorState.getCurrentContent();
-    // console.log('content state', convertToRaw(contentState));
-    // this.saveContent(contentState);
     this.setState({
       editorState,
     })
