@@ -35,13 +35,16 @@ export default class EditorComponent extends Component {
         }
         return 'not-handled';
     }
-    saveContent = (content) =>{
+    saveContent = (content) => {
         // console.log(content)
         window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)));
     }
     onChange = (editorState) => {
         const contentState = editorState.getCurrentContent();
-        this.saveContent(contentState)
+        setInterval(() => {
+            this.saveContent(contentState)
+        },5000)
+        // this.saveContent(contentState)
         this.setState({
             editorState,
         })
@@ -51,14 +54,14 @@ export default class EditorComponent extends Component {
     render() {
         return (
             <div data-element='editor_save' className='editor' >
-                    <Editor
-                        editorState={this.state.editorState}
-                        onChange={this.onChange}
-                        handleKeyCommand={this.handleKeyCommand}
-                        keyBindingFn={this.keyBindingFn}
-                        placeholder="Write Here"
-                        onsaveContent={this.saveContent}
-                    />
+                <Editor
+                    editorState={this.state.editorState}
+                    onChange={this.onChange}
+                    handleKeyCommand={this.handleKeyCommand}
+                    keyBindingFn={this.keyBindingFn}
+                    placeholder="Write Here"
+                    onsaveContent={this.saveContent}
+                />
             </div>
         )
     }
