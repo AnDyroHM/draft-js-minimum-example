@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils, getDefaultKeyBinding, KeyBindingUtil, convertFromRaw, convertToRaw } from 'draft-js';
-
 export default class EditorComponent extends Component {
     constructor(props) {
         super(props);
@@ -36,25 +35,30 @@ export default class EditorComponent extends Component {
         }
         return 'not-handled';
     }
+    saveContent = (content) =>{
+        // console.log(content)
+        window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)));
+    }
     onChange = (editorState) => {
+        const contentState = editorState.getCurrentContent();
+        this.saveContent(contentState)
         this.setState({
             editorState,
         })
     }
-    saveContent = (content) => {
-        window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)));
-    }
+
 
     render() {
         return (
             <div data-element='editor_save' className='editor' >
-                <Editor
-                    editorState={this.state.editorState}
-                    onChange={this.onChange}
-                    handleKeyCommand={this.handleKeyCommand}
-                    keyBindingFn={this.keyBindingFn}
-                    placeholder="Write Here"
-                />
+                    <Editor
+                        editorState={this.state.editorState}
+                        onChange={this.onChange}
+                        handleKeyCommand={this.handleKeyCommand}
+                        keyBindingFn={this.keyBindingFn}
+                        placeholder="Write Here"
+                        onsaveContent={this.saveContent}
+                    />
             </div>
         )
     }

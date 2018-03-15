@@ -3,6 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 import EditorComponent from './components/EditorComponent'
 class App extends Component {
+
+  saveContent = (content) => {
+    // console.log(content)
+
+  }
+
   render() {
     return (
       <div className="App">
@@ -10,7 +16,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Writter</h1>
         </header>
         Write down
-        <EditorComponent />
+        <EditorComponent onsaveContent={this.saveContent} />
       </div>
     );
   }
