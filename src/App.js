@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Editor, EditorState, RichUtils, getDefaultKeyBinding, KeyBindingUtil, convertToRaw } from 'draft-js';
+import { Editor, EditorState, RichUtils, getDefaultKeyBinding, KeyBindingUtil, convertFromRaw, convertToRaw } from 'draft-js';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { editorState: EditorState.createEmpty() };
-    // this.onChange = (editorState) => this.setState({ editorState });
+    this.state = {
+      editorState: null
+    };
+    const content = window.localStorage.getItem('content');
+    if (content) {
+      this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
+    } else {
+      this.state.editorState = EditorState.createEmpty();
+    }
+
     this.onChange = this.onChange.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
